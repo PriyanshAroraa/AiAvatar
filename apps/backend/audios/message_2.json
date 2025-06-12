@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "soundFile": "D:\\talking-avatar-with-ai\\apps\\backend\\audios\\message_2.wav",
+    "duration": 1.67
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.02, "value": "X" },
+    { "start": 0.02, "end": 0.09, "value": "G" },
+    { "start": 0.09, "end": 0.23, "value": "F" },
+    { "start": 0.23, "end": 0.30, "value": "G" },
+    { "start": 0.30, "end": 0.44, "value": "B" },
+    { "start": 0.44, "end": 0.65, "value": "C" },
+    { "start": 0.65, "end": 0.72, "value": "B" },
+    { "start": 0.72, "end": 0.83, "value": "A" },
+    { "start": 0.83, "end": 0.89, "value": "F" },
+    { "start": 0.89, "end": 1.09, "value": "B" },
+    { "start": 1.09, "end": 1.16, "value": "C" },
+    { "start": 1.16, "end": 1.30, "value": "E" },
+    { "start": 1.30, "end": 1.51, "value": "B" },
+    { "start": 1.51, "end": 1.67, "value": "X" }
+  ]
+}

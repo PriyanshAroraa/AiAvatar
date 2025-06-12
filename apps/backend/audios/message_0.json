@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "soundFile": "D:\\talking-avatar-with-ai\\apps\\backend\\audios\\message_0.wav",
+    "duration": 4.20
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.01, "value": "X" },
+    { "start": 0.01, "end": 0.11, "value": "B" },
+    { "start": 0.11, "end": 0.19, "value": "A" },
+    { "start": 0.19, "end": 0.66, "value": "B" },
+    { "start": 0.66, "end": 0.94, "value": "F" },
+    { "start": 0.94, "end": 1.15, "value": "D" },
+    { "start": 1.15, "end": 1.29, "value": "B" },
+    { "start": 1.29, "end": 1.36, "value": "C" },
+    { "start": 1.36, "end": 1.63, "value": "B" },
+    { "start": 1.63, "end": 1.71, "value": "A" },
+    { "start": 1.71, "end": 1.77, "value": "C" },
+    { "start": 1.77, "end": 1.83, "value": "D" },
+    { "start": 1.83, "end": 1.90, "value": "B" },
+    { "start": 1.90, "end": 2.04, "value": "C" },
+    { "start": 2.04, "end": 2.11, "value": "B" },
+    { "start": 2.11, "end": 2.19, "value": "A" },
+    { "start": 2.19, "end": 2.39, "value": "C" },
+    { "start": 2.39, "end": 2.46, "value": "B" },
+    { "start": 2.46, "end": 2.53, "value": "E" },
+    { "start": 2.53, "end": 2.61, "value": "A" },
+    { "start": 2.61, "end": 2.78, "value": "E" },
+    { "start": 2.78, "end": 2.85, "value": "B" },
+    { "start": 2.85, "end": 2.90, "value": "A" },
+    { "start": 2.90, "end": 2.95, "value": "B" },
+    { "start": 2.95, "end": 3.00, "value": "A" },
+    { "start": 3.00, "end": 3.06, "value": "C" },
+    { "start": 3.06, "end": 3.26, "value": "B" },
+    { "start": 3.26, "end": 3.33, "value": "G" },
+    { "start": 3.33, "end": 3.40, "value": "B" },
+    { "start": 3.40, "end": 3.54, "value": "E" },
+    { "start": 3.54, "end": 3.68, "value": "F" },
+    { "start": 3.68, "end": 3.75, "value": "B" },
+    { "start": 3.75, "end": 3.82, "value": "E" },
+    { "start": 3.82, "end": 4.03, "value": "B" },
+    { "start": 4.03, "end": 4.20, "value": "X" }
+  ]
+}
