@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { useSpeech } from "../hooks/useSpeech"
-import { SpeakerIcon } from "lucide-react" // Using Lucide React for an icon
+import { SpeakerIcon } from "lucide-react"
 
 export const VoiceAccentSelector = () => {
   const { currentVoiceId, setCurrentVoiceId } = useSpeech()
@@ -40,7 +40,10 @@ export const VoiceAccentSelector = () => {
           {voiceAccents.map((accent) => (
             <DropdownMenuItem
               key={accent.id}
-              onClick={() => setCurrentVoiceId(accent.id)}
+              onClick={() => {
+                console.log("VoiceAccentSelector: Setting voice ID to", accent.id) // NEW LOG HERE
+                setCurrentVoiceId(accent.id)
+              }}
               className={currentVoiceId === accent.id ? "font-bold bg-gray-200/50" : ""}
             >
               {accent.name}
