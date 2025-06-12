@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 
-const backendUrl = "http://localhost:3000"
+const backendUrl = "/api"
 
 const SpeechContext = createContext()
 
@@ -49,7 +49,7 @@ export const SpeechProvider = ({ children }) => {
       try {
         // LOG: What voiceId is being sent in STS request
         console.log("STS Request: Sending voiceId", currentVoiceId)
-        const data = await fetch(`${backendUrl}/sts`, {
+        const data = await fetch(`/api/sts`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -152,7 +152,7 @@ export const SpeechProvider = ({ children }) => {
     try {
       // LOG: What voiceId is being sent in TTS request
       console.log("TTS Request: Sending voiceId", currentVoiceId)
-      const data = await fetch(`${backendUrl}/tts`, {
+      const data = await fetch(`/api/tts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
