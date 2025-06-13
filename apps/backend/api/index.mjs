@@ -24,6 +24,9 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Allows common headers
   credentials: true, // If your frontend sends cookies or authorization headers
 }));
+
+// Explicitly handle OPTIONS requests for all routes
+app.options("*", cors()); // This ensures preflight requests are handled for all routes
 // --- END LESS RESTRICTIVE CORS CONFIGURATION ---
 
 // The 'port' variable is only relevant for local development, Vercel assigns its own.
