@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 
-const backendUrl = "/api"
+const backendUrl = "backend/api"
 
 const SpeechContext = createContext()
 
