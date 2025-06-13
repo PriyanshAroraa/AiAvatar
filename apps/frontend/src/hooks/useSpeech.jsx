@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 
-const backendUrl = "https://ai-avatar-backend-fg96.vercel.app/api/"
+const backendUrl = "https://ai-avatar-backend-fg96.vercel.app/api/index.mjs"
 
 const SpeechContext = createContext()
 
@@ -49,7 +49,7 @@ export const SpeechProvider = ({ children }) => {
       try {
         // LOG: What voiceId is being sent in STS request
         console.log("STS Request: Sending voiceId", currentVoiceId)
-        const data = await fetch(`https://ai-avatar-backend-fg96.vercel.app/api/sts`, {
+        const data = await fetch(`https://ai-avatar-backend-fg96.vercel.app/api/index.mjs/sts`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -152,7 +152,7 @@ export const SpeechProvider = ({ children }) => {
     try {
       // LOG: What voiceId is being sent in TTS request
       console.log("TTS Request: Sending voiceId", currentVoiceId)
-      const data = await fetch(`https://ai-avatar-backend-fg96.vercel.app/api/tts`, {
+      const data = await fetch(`https://ai-avatar-backend-fg96.vercel.app/api/index.mjs/tts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
