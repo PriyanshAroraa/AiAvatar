@@ -1,32 +1,13 @@
 {
-  "builds": [
-    {
-      "src": "apps/frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-
-        "outputDirectory": "dist"
-      }
-    },
-    {
-      "src": "apps/backend/api/**/*.mjs",
-      "use": "@vercel/node"
-    }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
   ],
-  "routes": [
-
-    {
-      "src": "/api/(.*)",
-      "dest": "apps/backend/api/$1"
-    },
-
-    {
-      "handle": "filesystem"
-    },
-
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+  "functions": {
+    "api/**/*.mjs": {
+      "runtime": "@vercel/node@2.x"
     }
-  ]
+  },
+  "buildCommand": "cd apps/frontend && yarn build",
+  "outputDirectory": "apps/frontend/dist",
+  "installCommand": "yarn install"
 }
