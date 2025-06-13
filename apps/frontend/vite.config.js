@@ -19,5 +19,5 @@ export default defineConfig({
     outDir: "dist",
     sourcemap: true
   },
-  base: "./", // ✅ Important for relative paths on Vercel
+  // base: "./", // ✅ Important for relative paths on Vercel
 })
