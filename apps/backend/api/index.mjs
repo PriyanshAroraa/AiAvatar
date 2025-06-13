@@ -15,28 +15,16 @@ const app = express();
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-// --- START CORS CONFIGURATION ---
-const allowedOrigins = [
-  "https://ai-avatar-frontend-seven.vercel.app", // Your frontend's Vercel domain
-  // Add any other domains your frontend might be hosted on (e.g., localhost for local development)
-  "http://localhost:5173", // Example for local Vite development server
-  "http://localhost:3000" // Example if your frontend runs on port 3000 locally
-];
-
+// --- START LESS RESTRICTIVE CORS CONFIGURATION ---
+// WARNING: Allowing all origins is generally NOT recommended for production environments due to security risks.
+// Use this only for development or if you fully understand the implications.
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Explicitly allow methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow headers
+  origin: "*", // Allows all origins
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"], // Allows all common HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Allows common headers
+  credentials: true, // If your frontend sends cookies or authorization headers
 }));
-// --- END CORS CONFIGURATION ---
+// --- END LESS RESTRICTIVE CORS CONFIGURATION ---
 
 // The 'port' variable is only relevant for local development, Vercel assigns its own.
 const port = 3000;
