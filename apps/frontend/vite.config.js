@@ -17,6 +17,7 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
-    sourcemap: true, // add this to avoid sourcemap errors
+    sourcemap: true
   },
+  base: "./", // ✅ Important for relative paths on Vercel
 })
