@@ -1,8 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
-
-const backendUrl = "https://ai-avatar-backend-fg96.vercel.app/api/index.mjs"
+const backendUrl = "https://ai-avatar-backend-fg96.vercel.app/api" // This is the correct URL for your backend
 
 const SpeechContext = createContext()
 
@@ -36,100 +35,83 @@ export const SpeechProvider = ({ children }) => {
   }
 
   const sendAudioData = async (audioBlob) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(audioBlob)
-    reader.onloadend = async () => {
-      const base64Audio = reader.result.split(",")[1]
-      setLoading(true)
-      // Immediately add user message to conversation history with a pending state
-      setConversation((prev) => [
-        ...prev,
-        { type: "user", text: "Transcribing audio...", analysis: null, emotion: currentEmotion, isPending: true },
-      ])
-      try {
-        // LOG: What voiceId is being sent in STS request
-        console.log("STS Request: Sending voiceId", currentVoiceId)
-        const data = await fetch(`https://ai-avatar-backend-fg96.vercel.app/api/index.mjs/sts`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ audio: base64Audio, emotion: currentEmotion, voiceId: currentVoiceId }), // Pass voiceId
-        })
-        const response = await data.json()
+      const reader = new FileReader()
+      reader.readAsDataURL(audioBlob)
+      reader.onloadend = async () => {
+        const base64Audio = reader.result.split(",")[1]
+        setLoading(true)
+        // Immediately add user message to conversation history with a pending state
+        setConversation((prev) => [
+          ...prev,
+          { type: "user", text: "Transcribing audio...", analysis: null, emotion: currentEmotion, isPending: true },
+        ])
+        try {
+          // LOG: What voiceId is being sent in STS request
+          console.log("STS Request: Sending voiceId", currentVoiceId)
+          const data = await fetch(`${backendUrl}/sts`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ audio: base64Audio, emotion: currentEmotion, voiceId: currentVoiceId }), // Pass voiceId
+          })
+          const response = await data.json()
 
-        // Update the last user message with actual transcribed text and analysis
-        setConversation((prev) => {
-          const updatedConversation = [...prev]
-          const lastUserMessageIndex = updatedConversation.findLastIndex((msg) => msg.type === "user" && msg.isPending)
-          if (lastUserMessageIndex !== -1) {
-            updatedConversation[lastUserMessageIndex] = {
-              type: "user",
-              text: response.userMessageText,
-              analysis: response.analysis,
-              emotion: currentEmotion,
+          // Update the last user message with actual transcribed text and analysis
+          setConversation((prev) => {
+            const updatedConversation = [...prev]
+            const lastUserMessageIndex = updatedConversation.findLastIndex(
+              (msg) => msg.type === "user" && msg.isPending,
+            )
+            if (lastUserMessageIndex !== -1) {
+              updatedConversation[lastUserMessageIndex] = {
+                type: "user",
+                text: response.userMessageText,
+                analysis: response.analysis,
+                emotion: currentEmotion,
+              }
             }
-          }
-          return [...updatedConversation, ...response.messages.map((msg) => ({ type: "ai", text: msg.text }))]
-        })
+            return [...updatedConversation, ...response.messages.map((msg) => ({ type: "ai", text: msg.text }))]
+          })
 
-        setCurrentMessage(response.messages[0])
-        setCurrentSentiment(response.analysis?.sentiment || null)
-        setCurrentPsychometric(response.analysis?.psychometricAnalysis || null)
-      } catch (error) {
-        console.error(error)
-        // On error, update the pending message to show an error state or remove it
-        setConversation((prev) => {
-          const updatedConversation = [...prev]
-          const lastUserMessageIndex = updatedConversation.findLastIndex((msg) => msg.type === "user" && msg.isPending)
-          if (lastUserMessageIndex !== -1) {
-            updatedConversation[lastUserMessageIndex] = {
-              type: "user",
-              text: "Error transcribing audio. Please try again.",
-              analysis: null,
-              emotion: currentEmotion,
-              isError: true,
+          setCurrentMessage(response.messages[0])
+          setCurrentSentiment(response.analysis?.sentiment || null)
+          setCurrentPsychometric(response.analysis?.psychometricAnalysis || null)
+        } catch (error) {
+          console.error(error)
+          // On error, update the pending message to show an error state or remove it
+          setConversation((prev) => {
+            const updatedConversation = [...prev]
+            const lastUserMessageIndex = updatedConversation.findLastIndex(
+              (msg) => msg.type === "user" && msg.isPending,
+            )
+            if (lastUserMessageIndex !== -1) {
+              updatedConversation[lastUserMessageIndex] = {
+                type: "user",
+                text: "Error transcribing audio. Please try again.",
+                analysis: null,
+                emotion: currentEmotion,
+                isError: true,
+              }
+            } else {
+              // If for some reason no pending message was found, add a new error message
+              updatedConversation.push({
+                type: "user",
+                text: "Error processing audio. Please try again.",
+                analysis: null,
+                emotion: currentEmotion,
+                isError: true,
+              })
             }
-          } else {
-            // If for some reason no pending message was found, add a new error message
-            updatedConversation.push({
-              type: "user",
-              text: "Error processing audio. Please try again.",
-              analysis: null,
-              emotion: currentEmotion,
-              isError: true,
-            })
-          }
-          return updatedConversation
-        })
-      } finally {
-        setLoading(false)
+            return updatedConversation
+          })
+        } finally {
+          setLoading(false)
+        }
       }
-    }
-  }
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then((stream) => {
-          const newMediaRecorder = new MediaRecorder(stream)
-          newMediaRecorder.onstart = initiateRecording
-          newMediaRecorder.ondataavailable = onDataAvailable
-          newMediaRecorder.onstop = async () => {
-            const audioBlob = new Blob(chunks, { type: "audio/webm" })
-            try {
-              await sendAudioData(audioBlob)
-            } catch (error) {
-              console.error(error)
-              alert(error.message)
-            }
-          }
-          setMediaRecorder(newMediaRecorder)
-        })
-        .catch((err) => console.error("Error accessing microphone:", err))
-    }
-  }, [])
+    },
+    []
+  )
 
   const startRecording = () => {
     if (mediaRecorder) {
@@ -152,7 +134,7 @@ export const SpeechProvider = ({ children }) => {
     try {
       // LOG: What voiceId is being sent in TTS request
       console.log("TTS Request: Sending voiceId", currentVoiceId)
-      const data = await fetch(`https://ai-avatar-backend-fg96.vercel.app/api/index.mjs/tts`, {
+      const data = await fetch(`${backendUrl}/tts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
