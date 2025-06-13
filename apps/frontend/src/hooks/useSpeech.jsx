@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react"
 
-const backendUrl = "/https://ai-avatar-frontend-fg96.vercel.app/api/"
+const backendUrl = "https://ai-avatar-backend-fg96.vercel.app/api/"
 
 const SpeechContext = createContext()
 
