@@ -6,7 +6,7 @@ const backendUrl = "   https://a378-103-173-240-123.ngrok-free.app" // This is t
 const SpeechContext = createContext()
 
 // Default voice IDs
-const DEFAULT_AMERICAN_ENGLISH_VOICE_ID = "6xPz2opT0y5qRh1U1Y"
+const DEFAULT_AMERICAN_ENGLISH_VOICE_ID = "uju3wxzG5OhpWcoi3SMy"
 
 export const SpeechProvider = ({ children }) => {
   const [recording, setRecording] = useState(false)
