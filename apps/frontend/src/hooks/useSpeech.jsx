@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
-const backendUrl = "   https://avatar-backend-691156478708.us-central1.run.app" // This is the correct URL for your backend
+const backendUrl = "  https://109b-103-173-240-131.ngrok-free.app" // This is the correct URL for your backend
 
 const SpeechContext = createContext()
 
