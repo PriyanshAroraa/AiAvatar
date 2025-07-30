@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
-const backendUrl = "https://9c4f6043d2d9.ngrok-free.app" // This is the correct URL for your backend
+const backendUrl = "https://bb4d92b8732e.ngrok-free.app" // This is the correct URL for your backend
 
 const SpeechContext = createContext()
 
